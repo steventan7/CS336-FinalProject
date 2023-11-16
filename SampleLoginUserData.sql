@@ -1,4 +1,3 @@
-use BarBeerDrinkerSample;
 drop table if exists users; 
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
