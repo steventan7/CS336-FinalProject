@@ -1,4 +1,7 @@
 #CREATE DATABASE TravelReservation;
+#Asssumptions: 
+	-- database assumes a maximum of 30 past and upcoming flights in ReservationPortfolioHas table 
+	-- database assumes a maximum of 6 connecting flights per ticket in FlightTicketReserve table 
 USE TravelReservation;
 
 DROP TABLE IF EXISTS ReservationPortfolioHas;
