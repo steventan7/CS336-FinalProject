@@ -62,6 +62,8 @@ CREATE TABLE FlightOperatedBy(
     airline_id integer, 
     aircraft_id integer, 
     arrival_time datetime, 
+    price decimal(10,2),
+    numOfStops integer,
     primary key(airline_id,aircraft_id,flight_number), 
     foreign key (airline_id) references AirlineCompany(airline_id), 
     foreign key (aircraft_id) references Aircraft(aircraft_id)
@@ -120,74 +122,73 @@ CREATE TABLE ReservationPortfolioHas(
     foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number)
 );
 
-
--- Sample data for AirlineCompany
+-- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
 
--- Sample data for Aircraft
-INSERT INTO Aircraft (aircraft_id, num_of_seats, operates_monday, operates_tuesday, operates_wednesday, operates_thursday, operates_friday, operates_saturday, operates_sunday) 
-VALUES 
+-- Insert sample data into Aircraft
+INSERT INTO Aircraft (aircraft_id, num_of_seats, operates_monday, operates_tuesday, operates_wednesday, operates_thursday, operates_friday, operates_saturday, operates_sunday)
+VALUES
 (1, 150, 1, 1, 1, 1, 1, 0, 0),
 (2, 200, 1, 1, 1, 1, 1, 1, 0),
 (3, 100, 1, 1, 1, 1, 1, 0, 1);
 
--- Sample data for Owns
+-- Insert sample data into Owns
 INSERT INTO Owns (airline_id, aircraft_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
 
--- Sample data for Airport
+-- Insert sample data into Airport
 INSERT INTO Airport (airport_id) VALUES (101), (102), (103);
 
--- Sample data for OperatesIn
+-- Insert sample data into OperatesIn
 INSERT INTO OperatesIn (airline_id, airport_id) VALUES
 (1, 101),
 (2, 102),
 (3, 103);
 
--- Sample data for FlightOperatedBy
-INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time) 
-VALUES 
-('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00'),
-('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00'),
-('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 17:45:00');
+-- Insert sample data into FlightOperatedBy
+INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops)
+VALUES
+('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00', 250.00, 0),
+('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00', 500.00, 1),
+('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 17:45:00', 300.00, 2);
 
--- Sample data for HasWaitingList
-INSERT INTO HasWaitingList (passengerid, bookingdate, flight_number, airline_id, aircraft_id) 
-VALUES 
+-- Insert sample data into HasWaitingList
+INSERT INTO HasWaitingList (passengerid, bookingdate, flight_number, airline_id, aircraft_id)
+VALUES
 (1, '2023-01-01 10:00:00', 101, 1, 1),
 (2, '2023-02-01 09:30:00', 102, 2, 2),
 (3, '2023-03-01 13:15:00', 103, 3, 3);
 
--- Sample data for FlightTicketReserve
-INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, passengerid, bookingfee, idNum, typeOneRound) 
-VALUES 
+-- Insert sample data into FlightTicketReserve
+INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, passengerid, bookingfee, idNum, typeOneRound)
+VALUES
 (1001, '2023-01-01 11:00:00', 250.00, 'John', 'Doe', 1, 20.00, 123456, 'one-way'),
 (1002, '2023-02-01 12:30:00', 500.00, 'Jane', 'Smith', 2, 25.00, 789012, 'roundtrip'),
 (1003, '2023-03-01 15:45:00', 300.00, 'Bob', 'Johnson', 3, 15.00, 345678, 'one-way');
 
--- Sample data for flightSpecificInfo
-INSERT INTO flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class) 
-VALUES 
+-- Insert sample data into flightSpecificInfo
+INSERT INTO flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)
+VALUES
 (1001, 15, 101, 1, 1, 'economy'),
 (1002, 20, 102, 2, 2, 'business'),
 (1003, 10, 103, 3, 3, 'first');
 
--- Sample data for Account
+-- Insert sample data into Account
 INSERT INTO Account (accountId) VALUES (10001), (10002), (10003);
 
--- Sample data for Buy
-INSERT INTO Buy (accountId, ticketNumber) VALUES
+-- Insert sample data into Buy
+INSERT INTO Buy (accountId, ticketNumber)
+VALUES
 (10001, 1001),
 (10002, 1002),
 (10003, 1003);
 
--- Sample data for ReservationPortfolioHas
-INSERT INTO ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number) 
-VALUES 
+-- Insert sample data into ReservationPortfolioHas
+INSERT INTO ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number)
+VALUES
 (10001, 1, 1, 101),
 (10002, 2, 2, 102),
 (10003, 3, 3, 103);
-
 
