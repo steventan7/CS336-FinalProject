@@ -4,8 +4,7 @@
 	String pwd = request.getParameter("password");
 	String usertype = request.getParameter("type");
 	Class.forName("com.mysql.jdbc.Driver");
-	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BarBeerDrinkerSample","root",
-	"Polarbears123!");
+
 	Statement st = con.createStatement();
 	ResultSet rs;
 	/* rs = st.executeQuery("select * from users where username='" + userid + "' and password='" + pwd
