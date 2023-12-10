@@ -15,7 +15,7 @@
 
         if ("customer".equals(userTypeFromDB)) {
             out.println("<a href='logout.jsp'>Log out</a>");
-            response.sendRedirect("CustomerHome.jsp");
+            response.sendRedirect("customerHome.jsp");
         } else if ("representative".equals(userTypeFromDB)) {
             out.println("<a href='logout.jsp'>Log out</a>");
             response.sendRedirect("representativeUI.jsp");
