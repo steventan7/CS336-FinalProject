@@ -41,7 +41,7 @@ landing time) -->
 			<h3>Reserve your flight: </h3>
 			<form action="customerBooking.jsp">
 		    <input type="radio" name="type" id = "reserveone-way" value="one-way" onclick="disable2()"> One Way
-		    <input type="radio" name="type" id = "reserveround-trip"  value="round-trip" > Round Trip
+		    <input type="radio" name="type" id = "reserveround-trip"  value="true" > Round Trip
 		    <input type="date" name="reservedate1" placeholder="Date1">
    		    <input type="date" name="reservedate2" placeholder="Date2"> <!-- Remove visibility if one-way -->
 		    <input type="checkbox" id="flexible" name="flexible" value="true">
@@ -62,7 +62,7 @@ landing time) -->
 			<h3>Search your flight: </h3>
 		    <form id="sortForm">
 		    <input type="radio" name="type" id = "one-way" value="one-way" onclick="disable()"> One Way
-		    <input type="radio" name="type" id = "round-trip"  value="round-trip" > Round Trip
+		    <input type="radio" name="type" id = "round-trip"  value="true" > Round Trip
 		    <input type="date" name="date1" placeholder="Date1">
    		    <input type="date" name="date2" placeholder="Date2"> <!-- Remove visibility if one-way -->
    		     <input type="checkbox" id="flexible" name="flexible" value="true">
