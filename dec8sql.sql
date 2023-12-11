@@ -1,6 +1,7 @@
 #CREATE DATABASE TravelReservation;
 USE TravelReservation;
 
+
 DROP TABLE IF EXISTS ReservationPortfolioHas;
 drop table if exists users; 
 DROP TABLE IF EXISTS flightSpecificInfo;
@@ -105,8 +106,9 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     type VARCHAR(25) NOT NULL,
-    CHECK (type IN ('customer', 'admin','representative'))
-    
+    CHECK (type IN ('customer', 'admin','representative')),
+    firstName VARCHAR(30) NOT NULL,
+    lastName VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE ReservationPortfolioHas(
@@ -122,7 +124,7 @@ CREATE TABLE ReservationPortfolioHas(
 
 
 
-INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
+INSERT INTO users (username, password, type,firstName, lastName) VALUES ('username1', 'password1', 'customer','Joe','Shmoe'), ('username2','password2','customer','Po','Dragon Warrior'), ('username3','password3','representative','Miranda','Garcia');
 
 -- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
