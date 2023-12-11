@@ -2,8 +2,7 @@
 USE TravelReservation;
 
 DROP TABLE IF EXISTS ReservationPortfolioHas;
-DROP TABLE IF EXISTS Buy;
-DROP TABLE IF EXISTS Account;
+drop table if exists users; 
 DROP TABLE IF EXISTS flightSpecificInfo;
 DROP TABLE IF EXISTS FlightTicketReserve;
 DROP TABLE IF EXISTS HasWaitingList;
@@ -103,25 +102,29 @@ CREATE TABLE flightSpecificInfo(
     PRIMARY KEY(ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class),
 	FOREIGN KEY(airline_id,aircraft_id,flight_number) REFERENCES FlightOperatedBy(airline_id,aircraft_id,flight_number)
 );
-CREATE TABLE Account(
-	accountId integer primary key
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    type VARCHAR(25) NOT NULL,
+    CHECK (type IN ('customer', 'admin','representative'))
+    
 );
-CREATE TABLE Buy(
-	accountId integer, 
-    ticketNumber integer, 
-    primary key (accountId, ticketNumber), 
-    foreign key (accountId) references Account(accountId), 
-    foreign key (ticketNumber) references FlightTicketReserve(ticketNumber)
-);
+
 CREATE TABLE ReservationPortfolioHas(
-	accountId integer, 
-    foreign key (accountId) references Account(accountId), 
+	accountId integer,
+    FOREIGN KEY (accountId) REFERENCES users(id),
     airline_id integer,
     aircraft_id integer,
     flight_number integer,
     primary key(accountId,airline_id,aircraft_id,flight_number),
     foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number)
 );
+
+
+
+
+INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','customer');
 
 -- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
@@ -153,7 +156,9 @@ INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt
 VALUES
 ('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00', 250.00, 0, 180),
 ('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00', 500.00, 1 ,180),
-('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 18:45:00', 300.00, 2, 240);
+('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 18:45:00', 300.00, 2, 240),
+('SFO', 'SEA', 'domestic', '2023-03-03 12:45:00', 103, 2, 2, '2023-03-03 16:45:00', 300.00, 2, 240),
+('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 3, 3, '2023-03-01 4:45:00', 400.00, 2, 210);
 
 -- Insert sample data into HasWaitingList
 INSERT INTO HasWaitingList (passengerid, bookingdate, flight_number, airline_id, aircraft_id)
@@ -176,20 +181,13 @@ VALUES
 (1002, 20, 102, 2, 2, 'business'),
 (1003, 10, 103, 3, 3, 'first');
 
--- Insert sample data into Account
-INSERT INTO Account (accountId) VALUES (10001), (10002), (10003);
-
--- Insert sample data into Buy
-INSERT INTO Buy (accountId, ticketNumber)
-VALUES
-(10001, 1001),
-(10002, 1002),
-(10003, 1003);
-
 -- Insert sample data into ReservationPortfolioHas
 INSERT INTO ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number)
 VALUES
-(10001, 1, 1, 101),
-(10002, 2, 2, 102),
-(10003, 3, 3, 103);
+(1, 1, 1, 101),
+(2, 2, 2, 102),
+(3, 3, 3, 103);
 
+SELECT *
+FROM FlightOperatedBy
+WHERE DATE(departure_time) BETWEEN DATE_SUB('2023-03-01', INTERVAL 3 DAY) AND DATE_ADD('2023-03-01', INTERVAL 3 DAY);
