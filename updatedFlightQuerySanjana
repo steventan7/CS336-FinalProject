@@ -207,10 +207,10 @@
 			else{
 				if (!sort.equals("all")) {
 				 	if (!filters.equals("none")) {
-				 		str2 = "SELECT " + filters + " FROM FlightOperatedBy WHERE DATE(departure_time) = '" + date2 + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+				 		str2 = "SELECT " + filters + " FROM FlightOperatedBy WHERE DATE(departure_time) = '" + date2 + "' AND departure_airport = '" + destination_airport + "' AND destination_airport = '" + departure_airport + "' ORDER BY " + sort;
 				 	}
 				    else{
-				    	str2 = "SELECT * FROM FlightOperatedBy WHERE DATE(departure_time) = '" + date2 + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+				    	str2 = "SELECT * FROM FlightOperatedBy WHERE DATE(departure_time) = '" + date2 + "' AND departure_airport = '" + destination_airport + "' AND destination_airport = '" + departure_airport + "' ORDER BY " + sort;
 				    }
 				}
 				else{
@@ -250,6 +250,9 @@
 				out.print("</td>");
 				out.print("<td>");
 				out.print("airline_id");
+				out.print("</td>");
+				out.print("<td>");
+				out.print("aircraft_id");
 				out.print("</td>");
 				out.print("<td>");
 				out.print("arrival_time");
@@ -298,6 +301,9 @@
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result.getString("airline_id"));
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("aircraft_id"));
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result.getString("arrival_time"));
@@ -356,6 +362,9 @@
 				out.print("airline_id");
 				out.print("</td>");
 				out.print("<td>");
+				out.print("aircraft_id");
+				out.print("</td>");
+				out.print("<td>");
 				out.print("arrival_time");
 				out.print("</td>");
 				out.print("<td>");
@@ -402,6 +411,9 @@
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result2.getString("airline_id"));
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result2.getString("aircraft_id"));
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result2.getString("arrival_time"));
