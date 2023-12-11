@@ -64,6 +64,7 @@ CREATE TABLE FlightOperatedBy(
     arrival_time datetime, 
     price decimal(10,2),
     numOfStops integer,
+    flight_duration integer,
     primary key(airline_id,aircraft_id,flight_number), 
     foreign key (airline_id) references AirlineCompany(airline_id), 
     foreign key (aircraft_id) references Aircraft(aircraft_id)
@@ -148,11 +149,11 @@ INSERT INTO OperatesIn (airline_id, airport_id) VALUES
 (3, 103);
 
 -- Insert sample data into FlightOperatedBy
-INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops)
+INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops, flight_duration)
 VALUES
-('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00', 250.00, 0),
-('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00', 500.00, 1),
-('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 17:45:00', 300.00, 2);
+('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00', 250.00, 0, 180),
+('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00', 500.00, 1 ,180),
+('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 18:45:00', 300.00, 2, 240);
 
 -- Insert sample data into HasWaitingList
 INSERT INTO HasWaitingList (passengerid, bookingdate, flight_number, airline_id, aircraft_id)
