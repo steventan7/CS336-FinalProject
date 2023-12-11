@@ -49,18 +49,23 @@
 			Connection con = db.getConnection();	
 			String str = "";
 			Statement stmt = con.createStatement();
-			String fname = "Steve";
-			String lname = "Tan";
-			String passengerID = "001";
+			String fname = request.getParameter("fname");
+			String lname = request.getParameter("lname");
+			String passengerID = request.getParameter("passengerid");
+			String econRate = request.getParameter("reserveecon_rate");
 			String bookingFee = "10";
-			String idNum = "5";
+			if (econRate.equals("Business")) {
+				bookingFee = "20";
+			} else if (econRate.equals("Economy")) {
+				bookingFee = "25";
+			}
+			String idNum = request.getParameter("idNum");
 			String type = request.getParameter("type") + "";
 			String date1 = request.getParameter("reservedate1");
 			String airlineID = request.getParameter("reserveairlineID");
 			String aircraftID = request.getParameter("reserveaircraftID");
 			String price = request.getParameter("reserveprice");
 			String flightNumber = request.getParameter("reserveflightnumber");
-			String econRate = request.getParameter("reserveecon_rate");
 			
 			out.print("<p><b>First name: </b>" + fname + "<p>");
 			out.print("<p><b>Last name: </b>" + lname + "<p>");
@@ -112,7 +117,6 @@
 			    firstName varchar(30), 
 			    lastName varchar(30), 
 			    passengerid integer, 
-			    bookingfee decimal(6,2), 
 			    idNum integer, 
 			CREATE TABLE flightSpecificInfo(
 			    seat_number integer,
@@ -122,7 +126,17 @@
 	    	<input type="submit" name="confirm" value="Confirm Reservation">
 			<input type="hidden" name=airline_id value="<%=airlineID%>">
 			<input type="hidden" name=aircraft_id value="<%=aircraftID%>">
-
+			<input type="hidden" name=fname value="<%=fname%>">
+			<input type="hidden" name=lname value="<%=lname%>">
+			<input type="hidden" name=passengerID value="<%=passengerID%>">
+			<input type="hidden" name=bookingFee value="<%=bookingFee%>">
+			<input type="hidden" name=idNum value="<%=idNum%>">
+			<input type="hidden" name=type value="<%=type%>">
+			<input type="hidden" name=date1 value="<%=date1%>">
+			<input type="hidden" name=price value="<%=price%>">
+			<input type="hidden" name=flightNumber value="<%=flightNumber%>">
+			<input type="hidden" name=econRate value="<%=econRate%>">
+			<input type="hidden" name=flightNumber value="<%=flightNumber%>">
     	</form>
 	</div>
 </body>

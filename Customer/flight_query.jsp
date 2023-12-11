@@ -12,20 +12,17 @@
 <body>
 	<%
 		try {
-
-			//Get the database connection
-			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();	
 			
-			//Create a SQL statement
+		    Class.forName("com.mysql.jdbc.Driver");
+		    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BarBeerDrinkerSample", "root", "yashas");
+
 			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
 			String sort = request.getParameter("sort");
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
 			String str = "";
 			
 			String[] selectedValues = request.getParameterValues("filter");
 			int n = selectedValues.length;
+			
 
 			String filters = "";
 			for (int i = 0; i < selectedValues.length; i++) {
@@ -36,23 +33,100 @@
 				} 
 			}
 			
-			if (!sort.equals("all")) {
-				if(!filters.equals("none")) {
-					str = "SELECT " + filters + " FROM FlightOperatedBy ORDER BY " + sort;
-				} else {
-					str = "SELECT * FROM FlightOperatedBy ORDER BY " + sort;
+			String dateFilter = request.getParameter("date1"); 
+			String date2 = request.getParameter("date2"); 
+			String departure_airport = request.getParameter("departure_airport");
+			String destination_airport = request.getParameter("destination_airport");
+			String flexibleValue = request.getParameter("flexible");
+			boolean isFlexible = "true".equals(flexibleValue);
+			
+			if(isFlexible){
+				if (dateFilter.isEmpty()&& departure_airport.isEmpty() && destination_airport.isEmpty()){
+					if (!sort.equals("all")) {
+					 	if (!filters.equals("none")) {
+					        str = "SELECT " + filters + " FROM FlightOperatedBy ORDER BY " + sort;
+					 	}
+					    else{
+					    	str = "SELECT * FROM FlightOperatedBy ORDER BY " + sort;
+					    }
+					}
+					else{
+						if (!filters.equals("none")) {
+					        str = "SELECT " + filters + " FROM FlightOperatedBy";
+					 	}
+					    else{
+					    	 str = "SELECT * FROM FlightOperatedBy";
+					    }
+					}
+				}
+				else{
+					if (!sort.equals("all")) {
+					 	if (!filters.equals("none")) {
+					 		str = "SELECT " + filters + " FROM FlightOperatedBy WHERE (DATE(departure_time) BETWEEN DATE_SUB('" + dateFilter + "',INTERVAL 3 DAY) AND DATE_ADD('" + dateFilter+ "',INTERVAL 3 DAY)) AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+					 	}
+					    else{
+					    	str = "SELECT * FROM FlightOperatedBy WHERE (DATE(departure_time) BETWEEN DATE_SUB('" + dateFilter + "',INTERVAL 3 DAY) AND DATE_ADD('" + dateFilter+ "',INTERVAL 3 DAY)) AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+					    }
+					}
+					else{
+						if (!filters.equals("none")) {
+							str = "SELECT " + filters + " FROM FlightOperatedBy WHERE (DATE(departure_time) BETWEEN DATE_SUB('" + dateFilter + "',INTERVAL 3 DAY) AND DATE_ADD('" + dateFilter+ "',INTERVAL 3 DAY)) AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "'";
+					 	}
+					    else{
+					    	str = "SELECT * FROM FlightOperatedBy WHERE (DATE(departure_time) BETWEEN DATE_SUB('" + dateFilter + "',INTERVAL 3 DAY) AND DATE_ADD('" + dateFilter+ "',INTERVAL 3 DAY)) AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "'";
+					    }
+					}
+					
+				}
+				
+			}
+			else{
+
+			
+			if (dateFilter.isEmpty()&& departure_airport.isEmpty() && destination_airport.isEmpty()){
+				if (!sort.equals("all")) {
+				 	if (!filters.equals("none")) {
+				        str = "SELECT " + filters + " FROM FlightOperatedBy ORDER BY " + sort;
+				 	}
+				    else{
+				    	str = "SELECT * FROM FlightOperatedBy ORDER BY " + sort;
+				    }
+				}
+				else{
+					if (!filters.equals("none")) {
+				        str = "SELECT " + filters + " FROM FlightOperatedBy";
+				 	}
+				    else{
+				    	 str = "SELECT * FROM FlightOperatedBy";
+				    }
 				}
 			}
-			if (sort.equals("all") || (n >= 2 && selectedValues[0].equals("none"))) {
-				str = "SELECT * FROM FlightOperatedBy";
+			else{
+				if (!sort.equals("all")) {
+				 	if (!filters.equals("none")) {
+				 		str = "SELECT " + filters + " FROM FlightOperatedBy WHERE DATE(departure_time) = '" + dateFilter + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+				 	}
+				    else{
+				    	str = "SELECT * FROM FlightOperatedBy WHERE DATE(departure_time) = '" + dateFilter + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "' ORDER BY " + sort;
+				    }
+				}
+				else{
+					if (!filters.equals("none")) {
+						str = "SELECT " + filters + " FROM FlightOperatedBy WHERE DATE(departure_time) = '" + dateFilter + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "'";
+				 	}
+				    else{
+				    	str = "SELECT * FROM FlightOperatedBy WHERE DATE(departure_time) = '" + dateFilter + "' AND departure_airport = '" + departure_airport + "' AND destination_airport = '" + destination_airport + "'";
+				    }
+				}
+				
 			}
-			
+			}
+
 			ResultSet result = stmt.executeQuery(str);
 			
 			out.print("<h1>Flight 1 </h1>");
 			out.print("<table style=\"padding: 20px\" id=\"flightTable\">");
 
-			//make a row
 			if (filters.equals("none")) {
 				out.print("<tr>");
 				out.print("<td>");
@@ -85,6 +159,9 @@
 				out.print("<td>");
 				out.print("numOfStops");
 				out.print("</td>");
+				out.print("<td>");
+				out.print("flight_duration");
+				out.print("</td>");
 			} else {
 				out.print("<tr>");
 				for (int i = 0; i < selectedValues.length; i++) {
@@ -95,9 +172,7 @@
 			}
 			
 
-			//parse out the results
 			while (result.next()) {
-				//make a row
 				if (filters.equals("none")) {
 					out.print("<tr>");
 					out.print("<td>");
@@ -130,6 +205,9 @@
 					out.print("<td>");
 					out.print(result.getString("numOfStops"));
 					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("flight_duration"));
+					out.print("</td>");
 				} else {
 					out.print("<tr>");
 					for (int i = 0; i < selectedValues.length; i++) {
@@ -141,7 +219,6 @@
 			}
 			out.print("</table>");
 						
-			//close the connection.
 			con.close();
 
 		} catch (Exception e) {

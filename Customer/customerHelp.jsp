@@ -70,7 +70,7 @@ input[type=submit]:hover {
 <h6 style="padding-left:50px;">Provide a question for our customer representatives!</h6>
 <h6 style="padding-left:50px;"><a href="frequentlyaskedquestions.jsp">Check out our commonly asked questions.</a></h6>
 <div style="border-radius: 5px; background-color: #f2f2f2; padding: 50px;">
-  <form action="/action_page.php">
+  <form action="customerHome.jsp">
     <label for="fname">First Name</label>
     <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
@@ -87,8 +87,14 @@ input[type=submit]:hover {
     <label for="subject">Subject</label>
     <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
 
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" onclick="showAlert()">
   </form>
+  <script>
+  function showAlert() {
+    var myText = "Your form has been submitted!";
+    alert (myText);
+  }
+  </script>
 </div>
 </body>
 </html>

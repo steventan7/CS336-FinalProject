@@ -40,11 +40,17 @@ landing time) -->
 		<div>
 			<h3>Reserve your flight: </h3>
 			<form action="customerBooking.jsp">
+			<input type="text" name="fname" placeholder="First Name">
+  			<input type="text" name="lname" placeholder="Last Name">
+  			<input type="text" name="passengerid" placeholder="Passenger ID">
+  			<input type="text" name="idNum" placeholder="ID Num">
+  			<input type="text" name="seatnumber" placeholder="Seat Number">
+  			<br>
 		    <input type="radio" name="type" id = "reserveone-way" value="one-way" onclick="disable2()"> One Way
 		    <input type="radio" name="type" id = "reserveround-trip"  value="round-trip" > Round Trip
 		    <input type="date" name="reservedate1" placeholder="Date1">
    		    <input type="date" name="reservedate2" placeholder="Date2"> <!-- Remove visibility if one-way -->
-		    <input type="checkbox" id="flexible" name="flexible" value="isFlexible">
+		    <input type="checkbox" id="flexible" name="flexible" value="true">
   			<label for="flexible">Flexible</label><br>
   			<input type="text" name="reserveairlineID" placeholder="Airlineid">
   			<input type="text" name="reserveaircraftID" placeholder="Aircraftid">
@@ -65,8 +71,10 @@ landing time) -->
 		    <input type="radio" name="type" id = "round-trip"  value="round-trip" > Round Trip
 		    <input type="date" name="date1" placeholder="Date1">
    		    <input type="date" name="date2" placeholder="Date2"> <!-- Remove visibility if one-way -->
-		    <input type="checkbox" id="flexible" name="flexible" value="isFlexible">
+   		     <input type="checkbox" id="flexible" name="flexible" value="true">
   			<label for="flexible">Flexible</label><br>
+   		     <input type="text" name="destination_airport" placeholder="Destination Airport">
+   		    <input type="text" name="departure_airport" placeholder="Departure Airport">
 		    <br>
 		    Sort:
 		    <br>
@@ -75,7 +83,7 @@ landing time) -->
 				<option value="price">Price</option>
 				<option value="departure_time">Departure</option>
 				<option value="arrival_time">Arrival</option>
-				<option value="flight duration">Flight duration</option>
+				<option value="flight_duration">Flight duration</option>
 			</select>
 			<br>
 			Filter:

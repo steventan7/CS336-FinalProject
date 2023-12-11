@@ -88,8 +88,8 @@
         function searchFAQ() {
             var userInput = document.getElementById('searchInput').value;
             var faqData = [
-                { question: "What is HTML?", answer: "HTML stands for HyperText Markup Language." },
-                { question: "What is CSS?", answer: "CSS stands for Cascading Style Sheets." },
+                { question: "Reserve", answer: ["You could reserve flights on this link:"," You could view your reserved flights here"] },
+                { question: "Help", answer: "CSS stands for Cascading Style Sheets." },
                 { question: "What is JavaScript?", answer: "JavaScript is a programming language that enables interactive web pages." }
             ];
 
@@ -110,7 +110,7 @@
             } else {
                 results.forEach(function (result) {
                     var resultItem = document.createElement('div');
-                    resultItem.innerHTML = '<strong>' + result.question + '</strong><br>' + result.answer + '<hr>';
+                    resultItem.innerHTML = '</strong><br>' + result.answer[0] + '<hr>';
                     resultsContainer.appendChild(resultItem);
                 });
             }
