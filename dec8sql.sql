@@ -69,12 +69,12 @@ CREATE TABLE FlightOperatedBy(
     foreign key (aircraft_id) references Aircraft(aircraft_id)
 );
 CREATE TABLE HasWaitingList(
-	passengerid integer, 
+	ticketNumber integer, 
     bookingdate datetime, 
     flight_number integer, 
     airline_id integer, 
     aircraft_id integer, 
-    primary key(airline_id,aircraft_id, flight_number, passengerid), 
+    primary key(airline_id,aircraft_id, flight_number, ticketNumber), 
     foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number)
 );
 CREATE TABLE FlightTicketReserve(
@@ -83,9 +83,7 @@ CREATE TABLE FlightTicketReserve(
     totalfare decimal(10,2),
     firstName varchar(30), 
     lastName varchar(30), 
-    passengerid integer, 
     bookingfee decimal(6,2), 
-    idNum integer, 
     typeOneRound VARCHAR(15),
 	CHECK (typeOneRound IN ('one-way', 'roundtrip')),
     primary key(ticketNumber)
@@ -124,7 +122,7 @@ CREATE TABLE ReservationPortfolioHas(
 
 
 
-INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','customer');
+INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
 
 -- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
@@ -161,18 +159,18 @@ VALUES
 ('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 3, 3, '2023-03-01 4:45:00', 400.00, 2, 210);
 
 -- Insert sample data into HasWaitingList
-INSERT INTO HasWaitingList (passengerid, bookingdate, flight_number, airline_id, aircraft_id)
+INSERT INTO HasWaitingList (ticketNumber, bookingdate, flight_number, airline_id, aircraft_id)
 VALUES
 (1, '2023-01-01 10:00:00', 101, 1, 1),
 (2, '2023-02-01 09:30:00', 102, 2, 2),
 (3, '2023-03-01 13:15:00', 103, 3, 3);
 
 -- Insert sample data into FlightTicketReserve
-INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, passengerid, bookingfee, idNum, typeOneRound)
+INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, bookingfee,typeOneRound)
 VALUES
-(1001, '2023-01-01 11:00:00', 250.00, 'John', 'Doe', 1, 20.00, 123456, 'one-way'),
-(1002, '2023-02-01 12:30:00', 500.00, 'Jane', 'Smith', 2, 25.00, 789012, 'roundtrip'),
-(1003, '2023-03-01 15:45:00', 300.00, 'Bob', 'Johnson', 3, 15.00, 345678, 'one-way');
+(1001, '2023-01-01 11:00:00', 250.00, 'John', 'Doe', 20.00, 'one-way'),
+(1002, '2023-02-01 12:30:00', 500.00, 'Jane', 'Smith', 25.00, 'roundtrip'),
+(1003, '2023-03-01 15:45:00', 300.00, 'Bob', 'Johnson', 15.00, 'one-way');
 
 -- Insert sample data into flightSpecificInfo
 INSERT INTO flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)
