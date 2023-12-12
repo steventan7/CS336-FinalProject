@@ -51,7 +51,6 @@
 			Statement stmt = con.createStatement();
 			String fname = request.getParameter("fname");
 			String lname = request.getParameter("lname");
-			String passengerID = request.getParameter("passengerid");
 			String econRate = request.getParameter("reserveecon_rate");
 			String bookingFee = "10";
 			if (econRate.equals("Business")) {
@@ -59,9 +58,10 @@
 			} else if (econRate.equals("Economy")) {
 				bookingFee = "25";
 			}
-			String idNum = request.getParameter("idNum");
+			String seatNumber = request.getParameter("seatnumber");
 			String type = request.getParameter("type") + "";
 			String date1 = request.getParameter("reservedate1");
+			String date2 = request.getParameter("reservedate2");
 			String airlineID = request.getParameter("reserveairlineID");
 			String aircraftID = request.getParameter("reserveaircraftID");
 			String price = request.getParameter("reserveprice");
@@ -69,11 +69,13 @@
 			
 			out.print("<p><b>First name: </b>" + fname + "<p>");
 			out.print("<p><b>Last name: </b>" + lname + "<p>");
-			out.print("<p><b>Passenger ID: </b>" + passengerID + "<p>");
 			out.print("<p><b>Flight type: </b>" + type + "<p>");
 			out.print("<p><b>Date of flight: </b>"  + date1 + "<p>");
-			out.print("<p><b>ID number: </b>"  + idNum + "<p>");
+			if (date2 != null){
+				out.print("<p><b>Date of flight 2: </b>"  + date2 + "<p>");
+			}
 			out.print("<p><b>Booking fee: </b> $"  + bookingFee + "<p>");
+			out.print("<p><b>Seat number: </b>" + seatNumber + " <p>");
 			out.print("<p><b>Airline ID: </b>" + airlineID + "<p>");
 			out.print("<p><b>Aircraft ID: </b>" + aircraftID + "<p>");
 			out.print("<p><b>Total fare: </b>" + price + "<p>");
@@ -88,7 +90,6 @@
             }
 			String ticketNum = String.valueOf(num);
 			out.print("<p><b>Ticket Number: </b>" + ticketNum + "</p>");
-			out.print("<p><b>Seat number: </b> 4 <p>");
 			
 			if (result != null) {
 			    result.close();
@@ -96,11 +97,11 @@
 			
 			str = "SELECT CURRENT_TIMESTAMP AS CurrentDateTime";
 			result = stmt.executeQuery(str);
-			String currentDate = "";
+			String datePurchased = "";
 			if (result.next()) {
-				currentDate = result.getString("CurrentDateTime");
+				datePurchased = result.getString("CurrentDateTime");
             }
-			out.print("<p><b>Date of Purchase: </b>" + currentDate + "</p>");
+			out.print("<p><b>Date of Purchase: </b>" + datePurchased + "</p>");
 			
 			if (result != null) {
 			    result.close();
@@ -110,33 +111,23 @@
 			con.close();
 
 		
-		%>
-		<!--  
-				CREATE TABLE FlightTicketReserve(
-			    purchasedatetime datetime, 
-			    firstName varchar(30), 
-			    lastName varchar(30), 
-			    passengerid integer, 
-			    idNum integer, 
-			CREATE TABLE flightSpecificInfo(
-			    seat_number integer,
-			);
-		-->
+		%> 
 		<form action="customerConfirmation.jsp">
 	    	<input type="submit" name="confirm" value="Confirm Reservation">
 			<input type="hidden" name=airline_id value="<%=airlineID%>">
 			<input type="hidden" name=aircraft_id value="<%=aircraftID%>">
 			<input type="hidden" name=fname value="<%=fname%>">
 			<input type="hidden" name=lname value="<%=lname%>">
-			<input type="hidden" name=passengerID value="<%=passengerID%>">
 			<input type="hidden" name=bookingFee value="<%=bookingFee%>">
-			<input type="hidden" name=idNum value="<%=idNum%>">
 			<input type="hidden" name=type value="<%=type%>">
 			<input type="hidden" name=date1 value="<%=date1%>">
+			<input type="hidden" name=date2 value="<%=date2%>">
 			<input type="hidden" name=price value="<%=price%>">
 			<input type="hidden" name=flightNumber value="<%=flightNumber%>">
 			<input type="hidden" name=econRate value="<%=econRate%>">
-			<input type="hidden" name=flightNumber value="<%=flightNumber%>">
+			<input type="hidden" name=seatNumber value="<%=seatNumber%>">
+			<input type="hidden" name=ticketNum value="<%=ticketNum%>">
+			<input type="hidden" name=datePurchased value="<%=datePurchased%>">
     	</form>
 	</div>
 </body>

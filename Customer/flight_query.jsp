@@ -148,6 +148,9 @@
 				out.print("airline_id");
 				out.print("</td>");
 				out.print("<td>");
+				out.print("aircraft_id");
+				out.print("</td>");
+				out.print("<td>");
 				out.print("arrival_time");
 				out.print("</td>");
 				out.print("<td>");
@@ -192,6 +195,9 @@
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result.getString("airline_id"));
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("aircraft_id"));
 					out.print("</td>");
 					out.print("<td>");
 					out.print(result.getString("arrival_time"));

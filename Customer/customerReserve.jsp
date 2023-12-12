@@ -40,26 +40,24 @@ landing time) -->
 		<div>
 			<h3>Reserve your flight: </h3>
 			<form action="customerBooking.jsp">
-			<input type="text" name="fname" placeholder="First Name">
-  			<input type="text" name="lname" placeholder="Last Name">
-  			<input type="text" name="passengerid" placeholder="Passenger ID">
-  			<input type="text" name="idNum" placeholder="ID Num">
-  			<input type="text" name="seatnumber" placeholder="Seat Number">
+			<input type="text" name="fname" placeholder="First Name" required>
+  			<input type="text" name="lname" placeholder="Last Name" required>
+  			<input type="text" name="seatnumber" placeholder="Seat Number" required>
   			<br>
-		    <input type="radio" name="type" id = "reserveone-way" value="one-way" onclick="disable2()"> One Way
-		    <input type="radio" name="type" id = "reserveround-trip"  value="round-trip" > Round Trip
-		    <input type="date" name="reservedate1" placeholder="Date1">
-   		    <input type="date" name="reservedate2" placeholder="Date2"> <!-- Remove visibility if one-way -->
+		    <input type="radio" name="type" id = "reserveone-way" value="one-way" onclick="disable2()" required> One Way
+		    <input type="radio" name="type" id = "reserveround-trip"  value="round-trip" required> Round Trip
+		    <input type="date" name="reservedate1" placeholder="Date1" required>
+   		    <input type="date" name="reservedate2" placeholder="Date2" required> 
 		    <input type="checkbox" id="flexible" name="flexible" value="true">
   			<label for="flexible">Flexible</label><br>
-  			<input type="text" name="reserveairlineID" placeholder="Airlineid">
-  			<input type="text" name="reserveaircraftID" placeholder="Aircraftid">
-  			<input type="text" name="reserveprice" placeholder="Price">
-  			<input type="text" name="reserveflightnumber" placeholder="Flight Number">
-		    <input type="radio" name="reserveecon_rate" value="first_class" > First Class
-		    <input type="radio" name="reserveecon_rate" value="business" > Business
-		    <input type="radio" name="reserveecon_rate" value="economy" > Economy
-		    <input type="submit" value="Search">
+  			<input type="text" name="reserveairlineID" placeholder="Airlineid" required>
+  			<input type="text" name="reserveaircraftID" placeholder="Aircraftid" required>
+  			<input type="text" name="reserveprice" placeholder="Price" required>
+  			<input type="text" name="reserveflightnumber" placeholder="Flight Number" required>
+		    <input type="radio" name="reserveecon_rate" value="first_class" required> First Class
+		    <input type="radio" name="reserveecon_rate" value="business" required> Business
+		    <input type="radio" name="reserveecon_rate" value="economy" required> Economy
+		    <input type="submit" value="Reserve">
 		    </form>
 		    <br>
 		  

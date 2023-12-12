@@ -43,7 +43,57 @@
 	</nav>
 	<br>
 	<div style="text-align:center;">
-		<h3>You have confirmed the following flight:</h3>
+		<%	
+		
+		    try {
+		        ApplicationDB db = new ApplicationDB();	
+		        Connection con = db.getConnection();	
+		        Statement stmt = con.createStatement();
+		
+		        String airlineID = request.getParameter("airlineID");
+		        String aircraftID = request.getParameter("aircraftID");
+		        String fname = request.getParameter("fname");
+		        String lname = request.getParameter("lname");
+		        String bookingFee = request.getParameter("bookingFee");
+		        String type = request.getParameter("type");
+		        String date1 = request.getParameter("date1");
+		        String date2 = request.getParameter("date2");
+		        String price = request.getParameter("price");
+		        String flightNumber = request.getParameter("flightNumber");
+		        String econRate = request.getParameter("econRate");
+		        String seatNumber = request.getParameter("seatNumber");
+		        String ticketNumber = request.getParameter("ticketNum");
+		        String datePurchased = request.getParameter("datePurchased");
+				
+		        String totalFare = String.valueOf(Integer.parseInt(price) + Integer.parseInt(bookingFee));
+		        
+		        int update1 = stmt.executeUpdate("insert into FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, " + 
+		        	"bookingfee, typeOneRound) values ('" + ticketNumber + "','" + datePurchased + "','" + totalFare + "' ,'" + fname+ "' ,'" +
+		        			lname + "','" + bookingFee + "','" + type + "')");
+		        
+				if (update1 == 1){
+					out.print("<h1> Your ticket has been successfully confirmed</h1>");
+				}else {
+					out.print("<h1>An error occured. Please try again.</h1>");
+				}
+				
+				//int update2 = stmt.executeUpdate("insert into flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)" +
+					//"values ('" + ticketNumber + "','" + seatNumber + "' ,'" + flightNumber+ "' ,'" + airlineID + "','" + aircraftID + econRate + "')");
+		        
+				//if (update2 == 1){
+				//	out.print("<h1> Your ticket has been successfully confirmed</h1>");
+				//}else {
+					//out.print("<h1>An error occured. Please try again.</h1>");
+				//}
+				con.close();
+		
+		    } catch (Exception e) {
+		        e.printStackTrace(); 
+		        out.println(e);
+		        out.println("An error occurred! Please try again!");
+		        // response.sendRedirect("your_destination_page.jsp");
+		    } 
+		%>
 		
 	</div>
 </body>
