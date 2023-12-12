@@ -1,12 +1,11 @@
 #CREATE DATABASE TravelReservation;
 USE TravelReservation;
 
-
 DROP TABLE IF EXISTS ReservationPortfolioHas;
 drop table if exists users; 
 DROP TABLE IF EXISTS flightSpecificInfo;
-DROP TABLE IF EXISTS FlightTicketReserve;
 DROP TABLE IF EXISTS HasWaitingList;
+DROP TABLE IF EXISTS FlightTicketReserve;
 DROP TABLE IF EXISTS FlightOperatedBy;
 DROP TABLE IF EXISTS OperatesIn;
 DROP TABLE IF EXISTS Airport;
@@ -71,13 +70,17 @@ CREATE TABLE FlightOperatedBy(
 );
 CREATE TABLE HasWaitingList(
 	ticketNumber integer, 
+    firstName varchar(30), 
+    lastName varchar(30), 
     bookingdate datetime, 
     flight_number integer, 
     airline_id integer, 
     aircraft_id integer, 
-    primary key(airline_id,aircraft_id, flight_number, ticketNumber), 
+    primary key(airline_id, aircraft_id, flight_number), 
     foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number)
 );
+
+
 CREATE TABLE FlightTicketReserve(
 	ticketNumber integer, 
     purchasedatetime datetime, 
@@ -106,9 +109,8 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     type VARCHAR(25) NOT NULL,
-    CHECK (type IN ('customer', 'admin','representative')),
-    firstName VARCHAR(30) NOT NULL,
-    lastName VARCHAR(30) NOT NULL
+    CHECK (type IN ('customer', 'admin','representative'))
+    
 );
 
 CREATE TABLE ReservationPortfolioHas(
@@ -124,7 +126,7 @@ CREATE TABLE ReservationPortfolioHas(
 
 
 
-INSERT INTO users (username, password, type,firstName, lastName) VALUES ('username1', 'password1', 'customer','Joe','Shmoe'), ('username2','password2','customer','Po','Dragon Warrior'), ('username3','password3','representative','Miranda','Garcia');
+INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
 
 -- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
@@ -161,11 +163,11 @@ VALUES
 ('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 3, 3, '2023-03-01 4:45:00', 400.00, 2, 210);
 
 -- Insert sample data into HasWaitingList
-INSERT INTO HasWaitingList (ticketNumber, bookingdate, flight_number, airline_id, aircraft_id)
+INSERT INTO HasWaitingList (ticketNumber, firstName, lastName, bookingdate, flight_number, airline_id, aircraft_id)
 VALUES
-(1, '2023-01-01 10:00:00', 101, 1, 1),
-(2, '2023-02-01 09:30:00', 102, 2, 2),
-(3, '2023-03-01 13:15:00', 103, 3, 3);
+(1, 'Kyle', 'Smith', '2023-01-01 10:00:00', 101, 1, 1),
+(2, 'Henry', 'Jo', '2023-02-01 09:30:00', 102, 2, 2),
+(3, 'Patty', 'Sue','2023-03-01 13:15:00', 103, 3, 3);
 
 -- Insert sample data into FlightTicketReserve
 INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, bookingfee,typeOneRound)
