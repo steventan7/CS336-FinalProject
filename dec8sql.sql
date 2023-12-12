@@ -40,20 +40,20 @@ CREATE TABLE Owns(
 );
 
 CREATE TABLE Airport(
-	airport_id integer primary key
+	airport_id CHAR(3) primary key
 );
 
 CREATE TABLE OperatesIn(
 	airline_id integer NOT NULL, 
-    airport_id integer, 
+    airport_id CHAR(3), 
     primary key(airline_id, airport_id),
     foreign key (airline_id) references AirlineCompany(airline_id), 
     foreign key (airport_id) references Airport(airport_id)
 );
 
 CREATE TABLE FlightOperatedBy(
-	destination_airport varchar(50), 
-    departure_airport varchar(50), 
+	destination_airport char(3), 
+    departure_airport char(3), 
     typeDomInt varchar(15),
     CHECK (typeDomInt IN ('domestic', 'international')), 
     departure_time datetime, 
@@ -66,7 +66,9 @@ CREATE TABLE FlightOperatedBy(
     flight_duration integer,
     primary key(airline_id,aircraft_id,flight_number), 
     foreign key (airline_id) references AirlineCompany(airline_id), 
-    foreign key (aircraft_id) references Aircraft(aircraft_id)
+    foreign key (aircraft_id) references Aircraft(aircraft_id),
+    foreign key (destination_airport) references Airport(airport_id),
+    foreign key (departure_airport) references Airport(airport_id)
 );
 CREATE TABLE HasWaitingList(
 	ticketNumber integer, 
@@ -145,13 +147,13 @@ INSERT INTO Owns (airline_id, aircraft_id) VALUES
 (3, 3);
 
 -- Insert sample data into Airport
-INSERT INTO Airport (airport_id) VALUES (101), (102), (103);
+INSERT INTO Airport (airport_id) VALUES ('JFK'), ('LAX'), ('LHR'),('CDG'), ('SFO'), ('SEA');
 
 -- Insert sample data into OperatesIn
 INSERT INTO OperatesIn (airline_id, airport_id) VALUES
-(1, 101),
-(2, 102),
-(3, 103);
+(1, 'JFK'),
+(2, 'LAX'),
+(3, 'CDG');
 
 -- Insert sample data into FlightOperatedBy
 INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops, flight_duration)
