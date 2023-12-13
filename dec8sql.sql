@@ -36,7 +36,7 @@ CREATE TABLE Owns(
     aircraft_id INTEGER, 
     primary key (airline_id, aircraft_id),
     foreign key (airline_id) references AirlineCompany(airline_id), 
-    foreign key (aircraft_id) references Aircraft(aircraft_id)
+    foreign key (aircraft_id) references Aircraft(aircraft_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Airport(
@@ -48,7 +48,7 @@ CREATE TABLE OperatesIn(
     airport_id CHAR(3), 
     primary key(airline_id, airport_id),
     foreign key (airline_id) references AirlineCompany(airline_id), 
-    foreign key (airport_id) references Airport(airport_id)
+    foreign key (airport_id) references Airport(airport_id) ON DELETE CASCADE
 );
 
 CREATE TABLE FlightOperatedBy(
@@ -66,9 +66,9 @@ CREATE TABLE FlightOperatedBy(
     flight_duration integer,
     primary key(airline_id,aircraft_id,flight_number), 
     foreign key (airline_id) references AirlineCompany(airline_id), 
-    foreign key (aircraft_id) references Aircraft(aircraft_id),
-    foreign key (destination_airport) references Airport(airport_id),
-    foreign key (departure_airport) references Airport(airport_id)
+    foreign key (aircraft_id) references Aircraft(aircraft_id) ON DELETE CASCADE,
+    foreign key (destination_airport) references Airport(airport_id) ON DELETE CASCADE,
+    foreign key (departure_airport) references Airport(airport_id) ON DELETE CASCADE
 );
 CREATE TABLE HasWaitingList(
 	ticketNumber integer, 
@@ -79,7 +79,7 @@ CREATE TABLE HasWaitingList(
     airline_id CHAR(2), 
     aircraft_id integer, 
     primary key(airline_id, aircraft_id, flight_number), 
-    foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number)
+    foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number) ON DELETE CASCADE
 );
 
 
@@ -104,7 +104,7 @@ CREATE TABLE flightSpecificInfo(
     class VARCHAR(10),
 	CHECK(class IN('economy', 'business','first')),
     PRIMARY KEY(ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class),
-	FOREIGN KEY(airline_id,aircraft_id,flight_number) REFERENCES FlightOperatedBy(airline_id,aircraft_id,flight_number)
+	FOREIGN KEY(airline_id,aircraft_id,flight_number) REFERENCES FlightOperatedBy(airline_id,aircraft_id,flight_number) ON DELETE CASCADE
 );
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -122,7 +122,7 @@ CREATE TABLE ReservationPortfolioHas(
     aircraft_id integer,
     flight_number integer,
     primary key(accountId,airline_id,aircraft_id,flight_number),
-    foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number)
+    foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number) ON DELETE CASCADE
 );
 
 
