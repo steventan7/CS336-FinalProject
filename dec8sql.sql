@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS AirlineCompany;
 
 
 CREATE TABLE AirlineCompany(
-	airline_id INTEGER PRIMARY KEY
+	airline_id CHAR(2) PRIMARY KEY
 );
 
 
@@ -32,7 +32,7 @@ CREATE TABLE Aircraft(
 );
 
 CREATE TABLE Owns(
-	airline_id INTEGER,
+	airline_id CHAR(2),
     aircraft_id INTEGER, 
     primary key (airline_id, aircraft_id),
     foreign key (airline_id) references AirlineCompany(airline_id), 
@@ -44,7 +44,7 @@ CREATE TABLE Airport(
 );
 
 CREATE TABLE OperatesIn(
-	airline_id integer NOT NULL, 
+	airline_id CHAR(2) NOT NULL, 
     airport_id CHAR(3), 
     primary key(airline_id, airport_id),
     foreign key (airline_id) references AirlineCompany(airline_id), 
@@ -58,7 +58,7 @@ CREATE TABLE FlightOperatedBy(
     CHECK (typeDomInt IN ('domestic', 'international')), 
     departure_time datetime, 
     flight_number integer, 
-    airline_id integer, 
+    airline_id CHAR(2), 
     aircraft_id integer, 
     arrival_time datetime, 
     price decimal(10,2),
@@ -76,7 +76,7 @@ CREATE TABLE HasWaitingList(
     lastName varchar(30), 
     bookingdate datetime, 
     flight_number integer, 
-    airline_id integer, 
+    airline_id CHAR(2), 
     aircraft_id integer, 
     primary key(airline_id, aircraft_id, flight_number), 
     foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number)
@@ -99,7 +99,7 @@ CREATE TABLE flightSpecificInfo(
     FOREIGN KEY (ticketNumber) REFERENCES FlightTicketReserve(ticketNumber),
     seat_number integer,
     flight_number integer, 
-    airline_id integer, 
+    airline_id CHAR(2), 
     aircraft_id integer, 
     class VARCHAR(10),
 	CHECK(class IN('economy', 'business','first')),
@@ -118,7 +118,7 @@ CREATE TABLE users (
 CREATE TABLE ReservationPortfolioHas(
 	accountId integer,
     FOREIGN KEY (accountId) REFERENCES users(id),
-    airline_id integer,
+    airline_id CHAR(2),
     aircraft_id integer,
     flight_number integer,
     primary key(accountId,airline_id,aircraft_id,flight_number),
@@ -131,7 +131,7 @@ CREATE TABLE ReservationPortfolioHas(
 INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
 
 -- Insert sample data into AirlineCompany
-INSERT INTO AirlineCompany (airline_id) VALUES (1), (2), (3);
+INSERT INTO AirlineCompany (airline_id) VALUES ('AA'), ('UA'), ('DL');
 
 -- Insert sample data into Aircraft
 INSERT INTO Aircraft (aircraft_id, num_of_seats, operates_monday, operates_tuesday, operates_wednesday, operates_thursday, operates_friday, operates_saturday, operates_sunday)
@@ -142,34 +142,34 @@ VALUES
 
 -- Insert sample data into Owns
 INSERT INTO Owns (airline_id, aircraft_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
+('AA', 1),
+('UA', 2),
+('DL', 3);
 
 -- Insert sample data into Airport
 INSERT INTO Airport (airport_id) VALUES ('JFK'), ('LAX'), ('LHR'),('CDG'), ('SFO'), ('SEA');
 
 -- Insert sample data into OperatesIn
 INSERT INTO OperatesIn (airline_id, airport_id) VALUES
-(1, 'JFK'),
-(2, 'LAX'),
-(3, 'CDG');
+('AA', 'JFK'),
+('UA', 'LAX'),
+('DL', 'CDG');
 
 -- Insert sample data into FlightOperatedBy
 INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops, flight_duration)
 VALUES
-('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 1, 1, '2023-01-01 15:00:00', 250.00, 0, 180),
-('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 2, 2, '2023-02-01 13:30:00', 500.00, 1 ,180),
-('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 3, 3, '2023-03-01 18:45:00', 300.00, 2, 240),
-('SFO', 'SEA', 'domestic', '2023-03-03 12:45:00', 103, 2, 2, '2023-03-03 16:45:00', 300.00, 2, 240),
-('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 3, 3, '2023-03-01 4:45:00', 400.00, 2, 210);
+('JFK', 'LAX', 'domestic', '2023-01-01 12:00:00', 101, 'AA', 1, '2023-01-01 15:00:00', 250.00, 0, 180),
+('LHR', 'CDG', 'international', '2023-02-01 10:30:00', 102, 'UA', 2, '2023-02-01 13:30:00', 500.00, 1 ,180),
+('SFO', 'SEA', 'domestic', '2023-03-01 14:45:00', 103, 'DL', 3, '2023-03-01 18:45:00', 300.00, 2, 240),
+('SFO', 'SEA', 'domestic', '2023-03-03 12:45:00', 103, 'UA', 2, '2023-03-03 16:45:00', 300.00, 2, 240),
+('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 'DL', 3, '2023-03-01 4:45:00', 400.00, 2, 210);
 
 -- Insert sample data into HasWaitingList
 INSERT INTO HasWaitingList (ticketNumber, firstName, lastName, bookingdate, flight_number, airline_id, aircraft_id)
 VALUES
-(1, 'Kyle', 'Smith', '2023-01-01 10:00:00', 101, 1, 1),
-(2, 'Henry', 'Jo', '2023-02-01 09:30:00', 102, 2, 2),
-(3, 'Patty', 'Sue','2023-03-01 13:15:00', 103, 3, 3);
+(1, 'Kyle', 'Smith', '2023-01-01 10:00:00', 101, 'AA', 1),
+(2, 'Henry', 'Jo', '2023-02-01 09:30:00', 102, 'UA', 2),
+(3, 'Patty', 'Sue','2023-03-01 13:15:00', 103, 'DL', 3);
 
 -- Insert sample data into FlightTicketReserve
 INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, bookingfee,typeOneRound)
@@ -181,16 +181,16 @@ VALUES
 -- Insert sample data into flightSpecificInfo
 INSERT INTO flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)
 VALUES
-(1001, 15, 101, 1, 1, 'economy'),
-(1002, 20, 102, 2, 2, 'business'),
-(1003, 10, 103, 3, 3, 'first');
+(1001, 15, 101, 'AA', 1, 'economy'),
+(1002, 20, 102, 'UA', 2, 'business'),
+(1003, 10, 103, 'DL', 3, 'first');
 
 -- Insert sample data into ReservationPortfolioHas
 INSERT INTO ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number)
 VALUES
-(1, 1, 1, 101),
-(2, 2, 2, 102),
-(3, 3, 3, 103);
+(1, 'AA', 1, 101),
+(2, 'UA', 2, 102),
+(3, 'DL', 3, 103);
 
 SELECT *
 FROM FlightOperatedBy
