@@ -77,7 +77,6 @@
 				if (result != null) {
 				    result.close();
 				}
-				capacity = "150";
 				str = "select count(*) as currentBookings from flightSpecificInfo where aircraft_id = " + aircraftID;
 				result = stmt.executeQuery(str);
 				String currentBooking = "";
@@ -96,7 +95,7 @@
 				}
 				
 				
-		        int update1 = stmt.executeUpdate("insert into FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, " + 
+		        float update1 = stmt.executeUpdate("insert into FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, " + 
 		        	"bookingfee, typeOneRound) values ('" + ticketNumber + "','" + datePurchased + "','" + totalFare + "' ,'" + fname+ "' ,'" +
 		        			lname + "','" + bookingFee + "','" + type + "')");
 		        
@@ -104,22 +103,29 @@
 					out.print("<h1>An error occured. Please try again.</h1>");
 				}
 				
-				int update2 = stmt.executeUpdate("insert into flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)" +
+				float update2 = stmt.executeUpdate("insert into flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)" +
 					"values ('" + ticketNumber + "','" + seatNumber + "' ,'" + flightNumber+ "' ,'" + airlineID + "','" + aircraftID + "','" + econRate + "')");
 		        
-				if (update2 == 1){
-					out.print("<h1> Your ticket has been successfully confirmed</h1>");
-				}else {
+				if (update2 != 1){
 					out.print("<h1>An error occurred. Please try again.</h1>");
 				}
+				
+				float update3 = stmt.executeUpdate("insert into ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number)"  +
+						" VALUES ('" + session.getAttribute("accountid") + "','" + airlineID + "' ,'" + aircraftID+ "' ,'" + flightNumber + "')");
+		        
+				if (update3 != 1){
+					out.print("<h1>An error occurred. Please try again.</h1>");
+				} else {
+					out.print("<h1>You have successfully reserved a flight!</h1>");
+				}
 				con.close();
+				Thread.sleep(5000);			
 				response.sendRedirect("customerReservations.jsp");
 		
 		    } catch (Exception e) {
 		        e.printStackTrace(); 
-		        out.println(e);
 		        out.println("An error occurred! Please try again!");
-		        response.sendRedirect("your_destination_page.jsp");
+		        response.sendRedirect("customerReserve.jsp");
 		    } 
 		%>
 		

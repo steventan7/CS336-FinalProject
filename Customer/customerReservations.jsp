@@ -70,17 +70,14 @@
         Connection con = db.getConnection();	
         Statement stmt = con.createStatement();
 
-        /*
-        create table reservationInfo as
-SELECT h.accountId, s.ticketNumber, s.seat_number, s.flight_number, s.airline_id, s.aircraft_id, s.class, r.purchasedatetime, r.totalfare, r.firstName, r.lastName, r.bookingfee, r.typeOneRound
-FROM flightSpecificInfo s
-INNER JOIN flightticketreserve r ON s.ticketNumber = r.ticketNumber
-INNER JOIN ReservationPortfolioHas h ON h.airline_id = s.airline_id;
+
+        String str1 = "select distinct h.accountId, s.ticketNumber, s.seat_number, s.flight_number, s.airline_id, s.aircraft_id, s.class, r.purchasedatetime, r.totalfare, r.firstName, r.lastName, r.bookingfee, r.typeOneRound " +
+        		"FROM flightSpecificInfo s INNER JOIN flightticketreserve r ON s.ticketNumber = r.ticketNumber " +
+        		"INNER JOIN ReservationPortfolioHas h ON h.airline_id = s.airline_id where h.accountId = " + session.getAttribute("accountid");
         
-        */
-        String str1 = "select * from reservationInfo where accountId = 7";
         ResultSet result = stmt.executeQuery(str1);
         
+     
         // Printing the combined table
         out.print("<table style=\"padding: 20px\" id=\"flightTable\">");
 
@@ -138,8 +135,14 @@ INNER JOIN ReservationPortfolioHas h ON h.airline_id = s.airline_id;
 	<br>
 	<br>
 	<h3>Cancel a reserved flight: </h3>
-	<form action="customerCancelation">
-		<input type="text" name="cancelledflight" placeholder="Reserved Flight to Cancel" required>
+	
+	<form action="customerCancelation.jsp">
+		<input type="text" name="ticketNumber" placeholder="Ticket Number" required>
+		<input type="text" name="seat_number" placeholder="Seat Number" required>
+		<input type="text" name="flight_number" placeholder="Flight Number" required>
+		<input type="text" name="airline_id" placeholder="Airline ID" required>
+		<input type="text" name="aircraft_id" placeholder="Aircraft ID" required>
+		<input type="text" name="class" placeholder="Flight Class" required>
 		<input type="submit" value="Confirm Cancellation">
 	</form>
 	</div>
