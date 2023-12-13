@@ -131,6 +131,16 @@ CREATE TABLE ReservationPortfolioHas(
     foreign key (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class) references flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class)
 );
 
+CREATE TABLE QuestionsToRep (
+    question_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    question TEXT,
+    response TEXT,
+    questionTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'Open',
+    FOREIGN KEY (customer_id) REFERENCES users(id)
+);
+
 
 
 
