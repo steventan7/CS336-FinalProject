@@ -3,8 +3,8 @@ USE TravelReservation;
 
 DROP TABLE IF EXISTS QuestionsToRep;
 DROP TABLE IF EXISTS ReservationPortfolioHas;
-drop table if exists users; 
 DROP TABLE IF EXISTS HasWaitingList;
+drop table if exists users;
 DROP TABLE IF EXISTS flightSpecificInfo;
 DROP TABLE IF EXISTS FlightTicketReserve;
 DROP TABLE IF EXISTS FlightOperatedBy;
@@ -185,11 +185,11 @@ VALUES
 ('LAX', 'JFK', 'domestic', '2023-03-03 1:15:00', 101, 'DL', 3, '2023-03-01 4:45:00', 400.00, 2, 210);
 
 -- Insert sample data into HasWaitingList
-INSERT INTO HasWaitingList (ticketNumber, firstName, lastName, bookingdate, flight_number, airline_id, aircraft_id)
+INSERT INTO HasWaitingList (ticketNumber, firstName, lastName, userid, bookingdate, flight_number, airline_id, aircraft_id)
 VALUES
-(1, 'Kyle', 'Smith', '2023-01-01 10:00:00', 101, 'AA', 1),
-(2, 'Henry', 'Jo', '2023-02-01 09:30:00', 102, 'UA', 2),
-(3, 'Patty', 'Sue','2023-03-01 13:15:00', 103, 'DL', 3);
+(1, 'Kyle', 'Smith', 1, '2023-01-01 10:00:00', 101, 'AA', 1),
+(2, 'Henry', 'Jo', 2, '2023-02-01 09:30:00', 102, 'UA', 2),
+(3, 'Patty', 'Sue', 3, '2023-03-01 13:15:00', 103, 'DL', 3);
 
 -- Insert sample data into FlightTicketReserve
 INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, bookingfee,typeOneRound)
@@ -216,3 +216,5 @@ SELECT *
 FROM FlightOperatedBy
 WHERE DATE(departure_time) BETWEEN DATE_SUB('2023-03-01', INTERVAL 3 DAY) AND DATE_ADD('2023-03-01', INTERVAL 3 DAY);
 select num_of_seats from Aircraft where aircraft_id = '1';
+
+select * from haswaitinglist where userid = 1;
