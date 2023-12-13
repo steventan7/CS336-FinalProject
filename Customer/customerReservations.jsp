@@ -64,78 +64,59 @@
 	
 	<br>
 	<%	
-    int accountId = 10001;
-    List<String> list = new ArrayList<String>();
 
     try {
         ApplicationDB db = new ApplicationDB();	
         Connection con = db.getConnection();	
         Statement stmt = con.createStatement();
 
-        // Query for ReservationPortfolioHas table
-        String str1 = "SELECT * FROM ReservationPortfolioHas WHERE accountId = 10001";
+        /*
+        create table reservationInfo as
+SELECT h.accountId, s.ticketNumber, s.seat_number, s.flight_number, s.airline_id, s.aircraft_id, s.class, r.purchasedatetime, r.totalfare, r.firstName, r.lastName, r.bookingfee, r.typeOneRound
+FROM flightSpecificInfo s
+INNER JOIN flightticketreserve r ON s.ticketNumber = r.ticketNumber
+INNER JOIN ReservationPortfolioHas h ON h.airline_id = s.airline_id;
+        
+        */
+        String str1 = "select * from reservationInfo where accountId = 7";
         ResultSet result = stmt.executeQuery(str1);
-
-        // Query for FlightOperatedBy table
-        String str2 = "SELECT * FROM FlightOperatedBy";
-
+        
         // Printing the combined table
         out.print("<table style=\"padding: 20px\" id=\"flightTable\">");
 
         // Table headers for ReservationPortfolioHas
         out.print("<tr>");
         out.print("<th>accountId</th>");
+        out.print("<th>ticketNumber</th>");
+        out.print("<th>seat_number</th>");
+        out.print("<th>flight_number</th>");
         out.print("<th>airline_id</th>");
         out.print("<th>aircraft_id</th>");
-        out.print("<th>flight_number</th>");
+        out.print("<th>class</th>");
+        out.print("<th>purchasedatetime</th>");
+        out.print("<th>totalfare</th>");
+        out.print("<th>firstName</th>");
+        out.print("<th>lastName</th>");
+        out.print("<th>bookingfee</th>");
+        out.print("<th>typeOneRound</th>");
         out.print("</tr>");
 
         // Table data for ReservationPortfolioHas
         while (result.next()) {
             out.print("<tr>");
             out.print("<td>" + result.getString("accountId") + "</td>");
+            out.print("<td>" + result.getString("ticketNumber") + "</td>");
+            out.print("<td>" + result.getString("seat_number") + "</td>");
+            out.print("<td>" + result.getString("flight_number") + "</td>");
             out.print("<td>" + result.getString("airline_id") + "</td>");
             out.print("<td>" + result.getString("aircraft_id") + "</td>");
-            out.print("<td>" + result.getString("flight_number") + "</td>");
-            out.print("</tr>");
-        }
-
-        // Table headers for FlightOperatedBy
-        out.print("<tr>");
-        out.print("<th>destination_airport</th>");
-        out.print("<th>departure_airport</th>");
-        out.print("<th>typeDomInt</th>");
-        out.print("<th>departure_time</th>");
-        out.print("<th>arrival_time</th>");
-        out.print("<th>price</th>");
-        out.print("<th>typeDomInt</th>");
-        out.print("<th>numOfStops</th>");
-
-        // New column added
-        out.print("<th>New_Column</th>");
-
-        out.print("</tr>");
-        
-        if (result != null) {
-		    result.close();
-		}
-        
-        result = stmt.executeQuery(str2);
-        // Table data for FlightOperatedBy
-        while (result.next()) {
-            out.print("<tr>");
-            out.print("<td>" + result.getString("destination_airport") + "</td>");
-            out.print("<td>" + result.getString("departure_airport") + "</td>");
-            out.print("<td>" + result.getString("typeDomInt") + "</td>");
-            out.print("<td>" + result.getString("departure_time") + "</td>");
-            out.print("<td>" + result.getString("arrival_time") + "</td>");
-            out.print("<td>" + result.getString("price") + "</td>");
-            out.print("<td>" + result.getString("typeDomInt") + "</td>");
-            out.print("<td>" + result.getString("numOfStops") + "</td>");
-
-            // New column data added
-            out.print("<td>New_Column_Data</td>");
-
+            out.print("<td>" + result.getString("class") + "</td>");
+            out.print("<td>" + result.getString("purchasedatetime") + "</td>");
+            out.print("<td>" + result.getString("totalfare") + "</td>");
+            out.print("<td>" + result.getString("firstName") + "</td>");
+            out.print("<td>" + result.getString("lastName") + "</td>");
+            out.print("<td>" + result.getString("bookingfee") + "</td>");
+            out.print("<td>" + result.getString("typeOneRound") + "</td>");
             out.print("</tr>");
         }
 
@@ -146,13 +127,21 @@
             result.close();
         }
 
-
+		
         con.close();
 
     } catch (Exception e) {
         e.printStackTrace(); // Print the exception for debugging purposes
     }
 	%>
+	<br>
+	<br>
+	<br>
+	<h3>Cancel a reserved flight: </h3>
+	<form action="customerCancelation">
+		<input type="text" name="cancelledflight" placeholder="Reserved Flight to Cancel" required>
+		<input type="submit" value="Confirm Cancellation">
+	</form>
 	</div>
 </body>
 </html>

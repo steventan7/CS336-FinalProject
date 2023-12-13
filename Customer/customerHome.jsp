@@ -88,9 +88,18 @@
         function searchFAQ() {
             var userInput = document.getElementById('searchInput').value;
             var faqData = [
-                { question: "Reserve", answer: ["You could reserve flights on this link:"," You could view your reserved flights here"] },
-                { question: "Help", answer: "CSS stands for Cascading Style Sheets." },
-                { question: "What is JavaScript?", answer: "JavaScript is a programming language that enables interactive web pages." }
+                { question: "Reserve", answer: "<p>You could reserve flights on this link:</p> <a href='customerReserve.jsp'>Click here</a>" },
+                { question: "How to reserve?", answer: "<p>You could search flights on this link:</p> <a href='customerReserve.jsp'>Click here</a>" },
+                { question: "Customer Reserve", answer: "<p>Customer reservation could be found here:</p> <a href='customerReserve.jsp'>Click here</a>" },
+                { question: "Help", answer: "<p>You could ask for help using this link:</p> <a href='customerHelp.jsp'>Click here</a>" },
+                { question: "Ask for Help", answer: "<p>Looking for help? Use this link:</p> <a href='customerHelp.jsp'>Click here</a>" },
+                { question: "Questions", answer: "<p>Have any questions? Maybe this could help:</p> <a href='customerHelp.jsp'>Click here</a>" },
+                { question: "My Flights", answer: "<p>You could check your flights using this link</p> <a href='customerReservations.jsp'>Click here</a>" },
+                { question: "Reservation", answer: "<p>Check your flights here:</p> <a href='customerReserve.jsp'>Click here</a>" },
+                { question: "Reservations", answer: "<p>Made a reservation recently?:</p> <a href='customerReserve.jsp'>Click here</a>" },
+                { question: "FAQ", answer: "<p>Here's a list of frequently asked questions!</p> <a href='faq.jsp'>Click here</a>" },
+                { question: "terminals", answer: "<p>Have questions about our terminals?:</p> <a href='faq.jsp'>Click here</a>" },
+                { question: "wifi", answer: "<p>Looking to learn more about our wifi policies?:</p> <a href='faq.jsp'>Click here</a>" }
             ];
 
             var searchResults = faqData.filter(function (faq) {
@@ -110,7 +119,7 @@
             } else {
                 results.forEach(function (result) {
                     var resultItem = document.createElement('div');
-                    resultItem.innerHTML = '</strong><br>' + result.answer[0] + '<hr>';
+                    resultItem.innerHTML = '<br>' + result.answer + '<hr>';
                     resultsContainer.appendChild(resultItem);
                 });
             }

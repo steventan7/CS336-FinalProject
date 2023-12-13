@@ -54,7 +54,7 @@ landing time) -->
   			<input type="text" name="reserveaircraftID" placeholder="Aircraftid" required>
   			<input type="text" name="reserveprice" placeholder="Price" required>
   			<input type="text" name="reserveflightnumber" placeholder="Flight Number" required>
-		    <input type="radio" name="reserveecon_rate" value="first_class" required> First Class
+		    <input type="radio" name="reserveecon_rate" value="first" required> First Class
 		    <input type="radio" name="reserveecon_rate" value="business" required> Business
 		    <input type="radio" name="reserveecon_rate" value="economy" required> Economy
 		    <input type="submit" value="Reserve">
@@ -116,7 +116,7 @@ landing time) -->
 		        }
 		    };
 		
-		    xhr.open('GET', 'flight_query.jsp?' + new URLSearchParams(formData).toString(), true);
+		    xhr.open('GET', 'customerFlightQuery.jsp?' + new URLSearchParams(formData).toString(), true);
 		    xhr.send();
 		};
 		function disable() {

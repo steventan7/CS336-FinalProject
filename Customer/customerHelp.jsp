@@ -68,7 +68,7 @@ input[type=submit]:hover {
 
 <h3 style="padding: 20px 50px 20px 50px;">Contact Form</h3>
 <h6 style="padding-left:50px;">Provide a question for our customer representatives!</h6>
-<h6 style="padding-left:50px;"><a href="frequentlyaskedquestions.jsp">Check out our commonly asked questions.</a></h6>
+<h6 style="padding-left:50px;"><a href="customerFAQ.jsp">Check out our commonly asked questions.</a></h6>
 <div style="border-radius: 5px; background-color: #f2f2f2; padding: 50px;">
   <form action="customerHome.jsp">
     <label for="fname">First Name</label>
