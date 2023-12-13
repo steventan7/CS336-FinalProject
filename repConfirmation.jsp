@@ -162,6 +162,16 @@
 				}else {
 					out.print("<h1>An error occurred. Please try again.</h1>");
 				}
+		        
+				float update3 = stmt.executeUpdate("insert into ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number)"  +
+						" VALUES ('" + session.getAttribute("accountid") + "','" + airlineID + "' ,'" + aircraftID+ "' ,'" + flightNumber + "')");
+		    
+				if (update3 != 1){
+					out.print("<h1>An error occurred. Please try again.</h1>");
+				} else {
+					out.print("<h1>You have successfully reserved a flight!</h1>");
+				}
+				
 				con.close();
 				//response.sendRedirect("repReservation.jsp");
                 }
