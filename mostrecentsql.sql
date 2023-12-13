@@ -150,6 +150,12 @@ CREATE TABLE QuestionsToRep (
 
 INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
 
+INSERT INTO QuestionsToRep (customer_id, question) VALUES
+(1, 'How do I reserve a flight?');
+INSERT INTO QuestionsToRep (customer_id, question) VALUES
+(1, 'How can I search for flights between 2 airports on a date?');
+INSERT INTO QuestionsToRep (customer_id, question) VALUES
+(2, 'How can I cancel a flight?');
 -- Insert sample data into AirlineCompany
 INSERT INTO AirlineCompany (airline_id) VALUES ('AA'), ('UA'), ('DL');
 
