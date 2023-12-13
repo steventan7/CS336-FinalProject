@@ -78,7 +78,7 @@ CREATE TABLE HasWaitingList(
     flight_number integer, 
     airline_id CHAR(2), 
     aircraft_id integer, 
-    primary key(airline_id, aircraft_id, flight_number), 
+    primary key(airline_id, aircraft_id, flight_number,ticketNumber), 
     foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number) ON DELETE CASCADE
 );
 
@@ -195,3 +195,4 @@ VALUES
 SELECT *
 FROM FlightOperatedBy
 WHERE DATE(departure_time) BETWEEN DATE_SUB('2023-03-01', INTERVAL 3 DAY) AND DATE_ADD('2023-03-01', INTERVAL 3 DAY);
+select num_of_seats from Aircraft where aircraft_id = '1';
