@@ -1,10 +1,11 @@
 #CREATE DATABASE TravelReservation;
 USE TravelReservation;
 
+DROP TABLE IF EXISTS QuestionsToRep;
 DROP TABLE IF EXISTS ReservationPortfolioHas;
 drop table if exists users; 
-DROP TABLE IF EXISTS flightSpecificInfo;
 DROP TABLE IF EXISTS HasWaitingList;
+DROP TABLE IF EXISTS flightSpecificInfo;
 DROP TABLE IF EXISTS FlightTicketReserve;
 DROP TABLE IF EXISTS FlightOperatedBy;
 DROP TABLE IF EXISTS OperatesIn;
@@ -70,17 +71,7 @@ CREATE TABLE FlightOperatedBy(
     foreign key (destination_airport) references Airport(airport_id) ON DELETE CASCADE,
     foreign key (departure_airport) references Airport(airport_id) ON DELETE CASCADE
 );
-CREATE TABLE HasWaitingList(
-	ticketNumber integer, 
-    firstName varchar(30), 
-    lastName varchar(30), 
-    bookingdate datetime, 
-    flight_number integer, 
-    airline_id CHAR(2), 
-    aircraft_id integer, 
-    primary key(airline_id, aircraft_id, flight_number,ticketNumber), 
-    foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number) ON DELETE CASCADE
-);
+
 
 
 CREATE TABLE FlightTicketReserve(
@@ -114,6 +105,19 @@ CREATE TABLE users (
     CHECK (type IN ('customer', 'admin','representative'))
     
 );
+CREATE TABLE HasWaitingList(
+	ticketNumber integer, 
+    firstName varchar(30), 
+    lastName varchar(30), 
+    userid integer,
+    foreign key (userid) references users(id),
+    bookingdate datetime, 
+    flight_number integer, 
+    airline_id CHAR(2), 
+    aircraft_id integer, 
+    primary key(airline_id, aircraft_id, flight_number,ticketNumber), 
+    foreign key (airline_id,aircraft_id, flight_number) references FlightOperatedBy(airline_id,aircraft_id, flight_number) ON DELETE CASCADE
+);
 
 CREATE TABLE ReservationPortfolioHas(
 	accountId integer,
@@ -130,7 +134,6 @@ CREATE TABLE ReservationPortfolioHas(
     foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number) ON DELETE CASCADE,
     foreign key (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class) references flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class)
 );
-
 CREATE TABLE QuestionsToRep (
     question_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,
@@ -140,6 +143,7 @@ CREATE TABLE QuestionsToRep (
     status VARCHAR(20) DEFAULT 'Open',
     FOREIGN KEY (customer_id) REFERENCES users(id)
 );
+
 
 
 
