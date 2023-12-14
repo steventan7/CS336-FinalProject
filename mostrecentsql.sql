@@ -99,7 +99,7 @@ CREATE TABLE flightSpecificInfo(
 );
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL, 
     password VARCHAR(255) NOT NULL,
     type VARCHAR(25) NOT NULL,
     CHECK (type IN ('customer', 'admin','representative'))
@@ -110,7 +110,7 @@ CREATE TABLE HasWaitingList(
     firstName varchar(30), 
     lastName varchar(30), 
     userid integer,
-    foreign key (userid) references users(id),
+    foreign key (userid) references users(id) ON DELETE CASCADE,
     bookingdate datetime, 
     flight_number integer, 
     airline_id CHAR(2), 
