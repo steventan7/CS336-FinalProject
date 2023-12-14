@@ -147,7 +147,7 @@ CREATE TABLE QuestionsToRep (
 
 
 
-INSERT INTO users (username, password, type) VALUES ('username1', 'password1', 'customer'), ('username2','password2','customer'), ('username3','password3','representative');
+INSERT INTO users (username, password, type) VALUES ('username4', 'password4', 'admin'), ('username2','password2','customer'), ('username3','password3','representative');
 
 INSERT INTO QuestionsToRep (customer_id, question) VALUES
 (1, 'How do I reserve a flight?');
@@ -170,7 +170,7 @@ INSERT INTO Owns (airline_id, aircraft_id) VALUES
 ('AA', 1),
 ('UA', 2),
 ('DL', 3);
-
+select * from reservationportfoliohas;
 -- Insert sample data into Airport
 INSERT INTO Airport (airport_id) VALUES ('JFK'), ('LAX'), ('LHR'),('CDG'), ('SFO'), ('SEA');
 
@@ -217,9 +217,80 @@ VALUES
 (2, 'UA', 2, 102, 1002, 20, 'business'),
 (3, 'DL', 3, 103, 1003, 10, 'first');
 
-SELECT *
-FROM FlightOperatedBy
-WHERE DATE(departure_time) BETWEEN DATE_SUB('2023-03-01', INTERVAL 3 DAY) AND DATE_ADD('2023-03-01', INTERVAL 3 DAY);
-select num_of_seats from Aircraft where aircraft_id = '1';
+select airline_id, aircraft_id, flight_number, count(*) as numTicketsPerFlight from flightSpecificInfo group by airline_id, aircraft_id, flight_number order by numTicketsPerFlight desc;
 
-select * from haswaitinglist where userid = 1;
+
+-- Insert more sample data into FlightOperatedBy for different months
+INSERT INTO FlightOperatedBy (destination_airport, departure_airport, typeDomInt, departure_time, flight_number, airline_id, aircraft_id, arrival_time, price, numOfStops, flight_duration)
+VALUES
+('SFO', 'SEA', 'domestic', '2023-05-01 14:45:00', 114, 'DL', 3, '2023-05-01 18:45:00', 320.00, 1, 240),
+('LAX', 'JFK', 'domestic', '2023-05-05 12:45:00', 115, 'AA', 1, '2023-05-05 16:45:00', 270.00, 1, 240),
+('CDG', 'LHR', 'international', '2023-06-10 09:15:00', 116, 'UA', 2, '2023-06-10 12:15:00', 470.00, 0, 180),
+('SEA', 'SFO', 'domestic', '2023-06-15 10:30:00', 117, 'DL', 3, '2023-06-15 13:30:00', 370.00, 1, 180),
+('JFK', 'LAX', 'domestic', '2023-07-01 14:45:00', 118, 'AA', 1, '2023-07-01 18:45:00', 420.00, 2, 240);
+
+INSERT INTO FlightTicketReserve (ticketNumber, purchasedatetime, totalfare, firstName, lastName, bookingfee, typeOneRound)
+VALUES
+(1014, '2023-05-11 10:30:00', 320.00, 'Aiden', 'Lee', 18.00, 'one-way'),
+(1015, '2023-05-13 12:45:00', 270.00, 'Mia', 'Davis', 22.00, 'roundtrip'),
+(1016, '2023-06-03 15:00:00', 470.00, 'Lucas', 'Miller', 25.00, 'one-way'),
+(1017, '2023-06-06 17:15:00', 370.00, 'Ava', 'Taylor', 20.00, 'one-way'),
+(1018, '2023-06-13 11:30:00', 420.00, 'Liam', 'Moore', 28.00, 'roundtrip');
+
+INSERT INTO flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id, class)
+VALUES
+(1014, 18, 114, 'DL', 3, 'business'),
+(1015, 22, 115, 'AA', 1, 'economy'),
+(1016, 15, 116, 'UA', 2, 'first'),
+(1017, 10, 117, 'DL', 3, 'economy'),
+(1018, 25, 118, 'AA', 1, 'business');
+-- Insert sample data into users
+INSERT INTO users (username, password, type) VALUES 
+('username5', 'password2', 'customer'), 
+('username6', 'password3', 'representative');
+
+-- Insert more sample data into users for HasWaitingList
+INSERT INTO users (username, password, type) VALUES 
+('user2', 'password2', 'customer'), 
+('user3', 'password3', 'representative'),
+('user4', 'password4', 'admin'), 
+('user5', 'password5', 'customer'),
+('user6', 'password6', 'admin');
+-- Insert more sample data into flightSpecificInfo for different months
+
+-- Insert more sample data into HasWaitingList for different months
+-- Insert more sample data into HasWaitingList for different months
+
+
+
+
+-- Insert more sample data into FlightTicketReserve for different months
+
+
+
+INSERT INTO HasWaitingList (ticketNumber, firstName, lastName, userid, bookingdate, flight_number, airline_id, aircraft_id)
+VALUES
+(14, 'Olivia', 'Martinez', 2, '2023-05-12 09:00:00', 114, 'DL', 3),
+(15, 'Noah', 'Rodriguez', 3, '2023-05-14 11:30:00', 115, 'AA', 1),
+(16, 'Sophia', 'Smith', 4, '2023-06-02 14:00:00', 116, 'UA', 2),
+(17, 'Liam', 'Johnson', 5, '2023-06-04 16:30:00', 117, 'DL', 3),
+(18, 'Emma', 'Jones', 6, '2023-06-12 10:45:00', 118, 'AA', 1);
+
+-- View the updated data
+SELECT * FROM HasWaitingList;
+-- Insert more sample data into ReservationPortfolioHas for different months
+INSERT INTO ReservationPortfolioHas (accountId, airline_id, aircraft_id, flight_number, ticketNumber, seat_number, class)
+VALUES
+(4, 'DL', 3, 114, 1014, 18, 'business'),
+(5, 'AA', 1, 115, 1015, 22, 'economy'),
+(6, 'UA', 2, 116, 1016, 15, 'first'),
+(7, 'DL', 3, 117, 1017, 10, 'economy'),
+(8, 'AA', 1, 118, 1018, 25, 'business');
+
+-- View the updated data
+SELECT * FROM users;
+SELECT * FROM HasWaitingList;
+SELECT * FROM FlightOperatedBy;
+SELECT * FROM FlightTicketReserve;
+SELECT * FROM flightSpecificInfo;
+SELECT * FROM ReservationPortfolioHas;
