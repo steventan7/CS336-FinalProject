@@ -46,7 +46,9 @@
     
     <form id="reservationForm">
 	    <input type="text" name="flightNumber" placeholder="flight number">
-		<br><br>
+		<br>
+		<p>or</p>
+		<br>
 		<input type="text" name="customerFirstName" placeholder="customer first name">
 		<input type="text" name="customerLastName" placeholder="customer last name">
 		
@@ -61,13 +63,20 @@
 	<br>
 	<p>Revenue Summary (Please enter one)</p>
 	<form id="summaryRevForm">
-		<input type="text" name="flight" placeholder="flight">
-		<input type="text" name="airline" placeholder="airline">
-		<input type="text" name="customer" placeholder="customer">
+		<input type="text" name="flightNumber" placeholder="flight number">
+		<br>
+		<p>or</p>
+		<br>
+		<input type="text" name="airline" placeholder="airline id">
+		<br>
+		<p>or</p>
+		<br>
+		<input type="text" name="customerFirstName" placeholder="customer first name">
+		<input type="text" name="customerLastName" placeholder="customer last name">
 		<button type="submit" form="form3" value="Submit" onclick="summaryForm()">Submit</button>
 	
 	</form>
-	<div id="result"></div>
+	<div id="result1"></div>
 	
    	<br><br>
    	
@@ -79,7 +88,26 @@
 		<button type="submit" form="form3" value="Submit" onclick="activeForm()">Submit</button>
 	
 	</form>
-	<div id="result"></div>
+	<div id="result2"></div>
+	
+	<br><br>
+   	
+   	<h3>Customer with Most Revenue</h3>
+	<br>
+	
+
+		
+    <form id="displayForm">
+        <button type="button" onclick="displayNames()">Submit</button>
+    </form>
+
+    <div id="result5"></div>
+    	
+
+
+
+	
+	
 	<br><br><br><br>
     <!-- JavaScript to handle form submission and redirection -->
     <script>
@@ -129,7 +157,7 @@
 		    xhr.onreadystatechange = function() {
 		        if (xhr.readyState === XMLHttpRequest.DONE) {
 		            if (xhr.status === 200) {
-		                document.getElementById('result').innerHTML = xhr.responseText;
+		                document.getElementById('result1').innerHTML = xhr.responseText;
 		            } else {
 		                console.error('Error:', xhr.status, xhr.statusText);
 		            }
@@ -139,15 +167,14 @@
 		    xhr.open('GET', 'adminsummary_query.jsp?' + new URLSearchParams(formData).toString(), true);
 		    xhr.send(formData);
 		};
-		
-		function summaryForm() {
+		function activeForm() {
 		    var xhr = new XMLHttpRequest();
 		    var formData = new FormData(document.getElementById('mostactiveForm'));
 			
 		    xhr.onreadystatechange = function() {
 		        if (xhr.readyState === XMLHttpRequest.DONE) {
 		            if (xhr.status === 200) {
-		                document.getElementById('result').innerHTML = xhr.responseText;
+		                document.getElementById('result2').innerHTML = xhr.responseText;
 		            } else {
 		                console.error('Error:', xhr.status, xhr.statusText);
 		            }
@@ -157,6 +184,30 @@
 		    xhr.open('GET', 'adminactive_query.jsp?' + new URLSearchParams(formData).toString(), true);
 		    xhr.send(formData);
 		};
+		
+		function custMostForm() {
+		    var xhr = new XMLHttpRequest();
+		    var formData = new FormData(document.getElementById('mostRevenue'));
+			
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+		            if (xhr.status === 200) {
+		                document.getElementById('result5').innerHTML = xhr.responseText;
+		            } else {
+		                console.error('Error:', xhr.status, xhr.statusText);
+		            }
+		        }
+		    };
+		
+		    xhr.open('GET', 'adminmostCust_query.jsp?' + new URLSearchParams(formData).toString(), true);
+		    xhr.send(formData);
+		};
+		function displayNames() {
+            var resultDiv = document.getElementById('result5');
+            resultDiv.innerHTML = "<br>John Doe";
+        };
+		
+		
        
     </script>
 </body>
