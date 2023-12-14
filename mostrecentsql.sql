@@ -129,10 +129,9 @@ CREATE TABLE ReservationPortfolioHas(
     class VARCHAR(9),
     ticketNumber integer,
     foreign key (ticketNumber) references FlightTicketReserve(ticketNumber),
-    CHECK(class IN('economy', 'business','first')),
     primary key(accountId,airline_id,aircraft_id,flight_number,ticketNumber, seat_number,class),
     foreign key (airline_id,aircraft_id,flight_number) references FlightOperatedBy(airline_id,aircraft_id,flight_number) ON DELETE CASCADE,
-    foreign key (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class) references flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class)
+    foreign key (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class) references flightSpecificInfo (ticketNumber, seat_number, flight_number, airline_id, aircraft_id,class) ON UPDATE CASCADE
 );
 CREATE TABLE QuestionsToRep (
     question_id INT PRIMARY KEY AUTO_INCREMENT,
